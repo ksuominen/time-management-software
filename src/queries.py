@@ -33,5 +33,19 @@ def add_workhours(starttime, endtime, lunchbreak, consultname, customername):
         cursor.close()
         con.close()
 
+def delete_workhours(id):
+    query = sql.SQL(
+        "DELETE FROM workhours WHERE id = %s"
+    )
+    con = connect()
+    if con is not None:
+        cursor = con.cursor()
+        cursor.execute(query,(id,))
+        con.commit()
+        cursor.close()
+        con.close()
 
-# add_workhours("19-02-2024 08:00", "19-02-2024 16:30", 30, "Mikko", "Kone")
+
+
+# add_workhours("19-02-2024 08:00", "19-02-2024 17:30", 30, "Jasper", "Finnair")
+delete_workhours(3)
