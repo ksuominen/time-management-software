@@ -33,6 +33,23 @@ def add_workhours(starttime, endtime, lunchbreak, consultname, customername):
         cursor.close()
         con.close()
 
+# delete row from workhours table
+def delete_workhours(id):
+    query = sql.SQL(
+        "DELETE FROM workhours WHERE id = %s"
+    )
+    con = connect()
+    if con is not None:
+        cursor = con.cursor()
+        cursor.execute(query,(id,))
+        con.commit()
+        cursor.close()
+        con.close()
+
+
+
+
+=======
 # Update daily workhours for a consult
 def update_workhours(id, starttime=None, endtime=None, lunchbreak=None, consultname=None, customername=None):
     query_parts = ["UPDATE workhours SET"]
@@ -74,5 +91,3 @@ def update_workhours(id, starttime=None, endtime=None, lunchbreak=None, consultn
         cursor.close()
         con.close()
 
-#add_workhours("19-02-2024 08:00", "19-02-2024 16:30", 35, "Maija", "Neste")
-update_workhours(id=2, starttime='22-10-2023 12:00')
