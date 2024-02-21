@@ -18,8 +18,7 @@ def create_workhour():
         lunchbreak = data["lunchbreak"]
         consultname = data["consultname"]
         customername = data["customername"]
-        add_workhours(starttime, endtime, lunchbreak, consultname, customername)
-        return {"success": "added workhours for: %s" % consultname}
+        return add_workhours(starttime, endtime, lunchbreak, consultname, customername)
     except:
         return {"error": "error adding workhours"}
     
