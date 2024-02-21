@@ -10,7 +10,7 @@ def index():
 
 
 @app.route("/workhours", methods=["POST"])
-def create_workhour():
+def create_workhours():
     try:
         data = request.get_json()
         starttime = data["starttime"]
