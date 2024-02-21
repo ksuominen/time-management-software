@@ -94,6 +94,7 @@ def delete_workhours(id):
         cursor.close()
         con.close()
 
+
 # Update daily workhours for a consult
 def update_workhours(
     id,
@@ -143,3 +144,19 @@ def update_workhours(
         con.commit()
         cursor.close()
         con.close()
+
+
+def get_workhours_by_consult(consultname):
+    query = sql.SQL(
+        "SELECT * FROM workhours WHERE consultname = %s"
+    )
+    con = connect()
+    if con is not None:
+        cursor = con.cursor()
+        cursor.execute(query,(consultname,))
+        data=cursor.fetchall()
+        cursor.close()
+        con.close()
+    return data
+
+
