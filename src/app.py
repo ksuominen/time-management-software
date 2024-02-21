@@ -1,8 +1,7 @@
 from flask import Flask, request
-from queries import db_add_workhours, db_update_workhours
+from queries import db_add_workhours, db_delete_workhours, db_get_workhours_by_consult
 
 app = Flask(__name__)
-
 
 @app.route("/", methods=["GET"])
 def index():
@@ -18,6 +17,7 @@ def create_workhours():
         lunchbreak = data["lunchbreak"]
         consultname = data["consultname"]
         customername = data["customername"]
+
         db_add_workhours(starttime, endtime, lunchbreak, consultname, customername)
         return {"success": "added workhours for: %s" % consultname}
     except:
@@ -36,3 +36,21 @@ def update_workhours(id):
         return {"success": "added workhours for: %s" % consultname}
     except:
         return {"error": "error adding workhours"}
+    
+@app.route("/workhours/<int:id>", methods=["DELETE"])
+def delete_workhour(id):
+    try:
+        db_delete_workhours(id)
+        return {"success": f"id: {id} was successfully deleted"}
+    except:
+        return {"error": "error deleting workhours"}
+    
+@app.route("/workhours/<consultname>", methods=["GET"])
+def get_workhour_by_consult(consultname):
+    try:
+        workhours = db_get_workhours_by_consult(consultname)
+        return workhours
+    except:
+        return {"error": "error with printing workhours"}
+
+        
