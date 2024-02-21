@@ -45,11 +45,7 @@ def delete_workhours(id):
         con.commit()
         cursor.close()
         con.close()
-
-
-
-
-=======
+        
 # Update daily workhours for a consult
 def update_workhours(id, starttime=None, endtime=None, lunchbreak=None, consultname=None, customername=None):
     query_parts = ["UPDATE workhours SET"]
@@ -90,4 +86,3 @@ def update_workhours(id, starttime=None, endtime=None, lunchbreak=None, consultn
         con.commit()
         cursor.close()
         con.close()
-
