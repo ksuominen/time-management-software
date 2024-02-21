@@ -56,7 +56,6 @@ def validate_user_input(starttime, endtime, lunchbreak, consultname, customernam
 
 
 # Add daily workhours for a consult
-
 def db_add_workhours(starttime, endtime, lunchbreak, consultname, customername):
     val = validate_user_input(starttime, endtime, lunchbreak, consultname, customername)
     if val != "everything ok":
@@ -117,7 +116,7 @@ def db_update_workhours(id, starttime, endtime, lunchbreak, consultname, custome
         cursor.close()
         con.close()
 
-
+# Fetch workhours by a consult
 def db_get_workhours_by_consult(consultname):
     query = sql.SQL(
         "SELECT * FROM workhours WHERE consultname = %s"
