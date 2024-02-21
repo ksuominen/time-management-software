@@ -1,5 +1,5 @@
 from flask import Flask, request
-from queries import add_workhours
+from queries import db_add_workhours, db_update_workhours
 
 app = Flask(__name__)
 
@@ -18,7 +18,21 @@ def create_workhour():
         lunchbreak = data["lunchbreak"]
         consultname = data["consultname"]
         customername = data["customername"]
-        add_workhours(starttime, endtime, lunchbreak, consultname, customername)
+        db_add_workhours(starttime, endtime, lunchbreak, consultname, customername)
+        return {"success": "added workhours for: %s" % consultname}
+    except:
+        return {"error": "error adding workhours"}
+    
+@app.route("/workhours/<int:id>", methods=["PUT"])
+def update_workhours(id):
+    try:
+        data = request.get_json()
+        starttime = data["starttime"]
+        endtime = data["endtime"]
+        lunchbreak = data["lunchbreak"]
+        consultname = data["consultname"]
+        customername = data["customername"]
+        db_update_workhours(id, starttime, endtime, lunchbreak, consultname, customername)
         return {"success": "added workhours for: %s" % consultname}
     except:
         return {"error": "error adding workhours"}
