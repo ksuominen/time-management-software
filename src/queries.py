@@ -84,12 +84,9 @@ def db_add_workhours(starttime, endtime, lunchbreak, consultname, customername):
     return {"error": "problems with connection"}
 
 
-
 # Delete row from workhours table
 def db_delete_workhours(id):
-    query = sql.SQL(
-        "DELETE FROM workhours WHERE id = %s"
-    )
+    query = sql.SQL("DELETE FROM workhours WHERE id = %s")
     con = connect()
     if con is not None:
         cursor = con.cursor()
@@ -98,13 +95,18 @@ def db_delete_workhours(id):
         cursor.close()
         con.close()
 
+
 # Update daily workhours for a consult
 def db_update_workhours(id, starttime, endtime, lunchbreak, consultname, customername):
+    val = validate_user_input(starttime, endtime, lunchbreak, consultname, customername)
+    if val != "everything ok":
+        return val
+
     query = sql.SQL(
-        ''' UPDATE workhours 
+        """ UPDATE workhours 
             SET starttime = %s, endtime = %s, lunchbreak = %s, consultname = %s, customername = %s 
             WHERE id = %s;
-        '''
+        """
     )
     con = connect()
     if con is not None:
@@ -115,19 +117,17 @@ def db_update_workhours(id, starttime, endtime, lunchbreak, consultname, custome
         con.commit()
         cursor.close()
         con.close()
+        return {"success": "updated workhours for: %s" % consultname}
+    return {"error": "problems with connection"}
 
 # Fetch workhours by a consult
 def db_get_workhours_by_consult(consultname):
-    query = sql.SQL(
-        "SELECT * FROM workhours WHERE consultname = %s"
-    )
+    query = sql.SQL("SELECT * FROM workhours WHERE consultname = %s")
     con = connect()
     if con is not None:
         cursor = con.cursor()
-        cursor.execute(query,(consultname,))
-        data=cursor.fetchall()
+        cursor.execute(query, (consultname,))
+        data = cursor.fetchall()
         cursor.close()
         con.close()
     return data
-
-
