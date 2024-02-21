@@ -3,7 +3,7 @@ from queries import (
     db_add_workhours,
     db_delete_workhours,
     db_get_workhours_by_consult,
-    db_update_workhours,
+    db_update_workhours
 )
 
 app = Flask(__name__)
@@ -48,7 +48,7 @@ def update_workhours(id):
 
 
 @app.route("/workhours/<int:id>", methods=["DELETE"])
-def delete_workhour(id):
+def delete_workhours(id):
     try:
         db_delete_workhours(id)
         return {"success": f"id: {id} was successfully deleted"}
@@ -57,7 +57,7 @@ def delete_workhour(id):
 
 
 @app.route("/workhours/<consultname>", methods=["GET"])
-def get_workhour_by_consult(consultname):
+def get_workhours_by_consult(consultname):
     try:
         workhours = db_get_workhours_by_consult(consultname)
         return workhours
