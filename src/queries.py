@@ -1,6 +1,7 @@
 from config import config
 import psycopg2
 from psycopg2 import sql
+from datetime import datetime
 
 
 def connect():
@@ -48,8 +49,6 @@ def delete_workhours(id):
 
 
 
-
-=======
 # Update daily workhours for a consult
 def update_workhours(id, starttime=None, endtime=None, lunchbreak=None, consultname=None, customername=None):
     query_parts = ["UPDATE workhours SET"]
@@ -90,4 +89,17 @@ def update_workhours(id, starttime=None, endtime=None, lunchbreak=None, consultn
         con.commit()
         cursor.close()
         con.close()
+
+def get_workhours_by_consult(consultname):
+    query = sql.SQL(
+        "SELECT * FROM workhours WHERE consultname = %s"
+    )
+    con = connect()
+    if con is not None:
+        cursor = con.cursor()
+        cursor.execute(query,(consultname,))
+        data=cursor.fetchall()
+        cursor.close()
+        con.close()
+    return data
 
