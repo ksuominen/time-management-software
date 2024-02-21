@@ -94,7 +94,6 @@ def delete_workhours(id):
         cursor.close()
         con.close()
 
-
 # Update daily workhours for a consult
 def update_workhours(
     id,
